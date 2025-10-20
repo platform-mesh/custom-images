@@ -39,6 +39,12 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
+
+      - name: Inspect buildkit image
+        run: docker buildx imagetools inspect public.ecr.aws/blinkit/moby/buildkit:v0.13.1
+      - name: Pull buildkit image
+        run: docker pull public.ecr.aws/blinkit/moby/buildkit:v0.13.1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 

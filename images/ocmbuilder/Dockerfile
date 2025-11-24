@@ -38,7 +38,7 @@ ENV BINARY=yq_linux_${TARGETARCH}
 RUN wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - | tar xz && sudo mv ${BINARY} /usr/local/bin/yq
 
 # Install ocm
-RUN export OCM_VERSION="0.31.0" && \
+RUN export OCM_VERSION="0.33.0" && \
     curl -o /tmp/ocm.tar.gz -sSL https://github.com/open-component-model/ocm/releases/download/v$OCM_VERSION/ocm-$OCM_VERSION-linux-${TARGETARCH}.tar.gz && \
     tar -xzf /tmp/ocm.tar.gz -C /usr/local/bin && \
     rm /tmp/ocm.tar.gz && \

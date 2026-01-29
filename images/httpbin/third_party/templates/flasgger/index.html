@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    {% if httpbin_prefix %}
+    <base href="{{ httpbin_prefix }}/">
+    {% endif %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.29.1/swagger-ui.min.css">
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='favicon.ico')}}" sizes="64x64 32x32 16x16" />
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+
+        /* Custom styling for httpbin branding */
+        .swagger-ui .topbar {
+            background-color: #1f2937;
+        }
+
+        .swagger-ui .topbar .download-url-wrapper .select-label {
+            color: #fff;
+        }
+
+        .swagger-ui .topbar .download-url-wrapper input[type=text] {
+            border-color: #4b5563;
+        }
+
+        .swagger-ui .info .title {
+            color: #1f2937;
+        }
+
+        .swagger-ui .info hgroup.main a {
+            color: #3b82f6;
+        }
+
+        .swagger-ui .opblock.opblock-get {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .swagger-ui .opblock.opblock-get .opblock-summary-method {
+            background: #10b981;
+        }
+
+        .swagger-ui .opblock.opblock-post {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .swagger-ui .opblock.opblock-post .opblock-summary-method {
+            background: #3b82f6;
+        }
+
+        .swagger-ui .opblock.opblock-put {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .swagger-ui .opblock.opblock-put .opblock-summary-method {
+            background: #f59e0b;
+        }
+
+        .swagger-ui .opblock.opblock-delete {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .swagger-ui .opblock.opblock-delete .opblock-summary-method {
+            background: #ef4444;
+        }
+
+        .swagger-ui .opblock.opblock-patch {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .swagger-ui .opblock.opblock-patch .opblock-summary-method {
+            background: #8b5cf6;
+        }
+
+        .swagger-ui .btn.execute {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .swagger-ui .btn.execute:hover {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        /* GitHub corner */
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out;
+        }
+
+        @keyframes octocat-wave {
+            0%, 100% { transform: rotate(0); }
+            20%, 60% { transform: rotate(-25deg); }
+            40%, 80% { transform: rotate(10deg); }
+        }
+
+        @media (max-width: 500px) {
+            .github-corner:hover .octo-arm {
+                animation: none;
+            }
+            .github-corner .octo-arm {
+                animation: octocat-wave 560ms ease-in-out;
+            }
+        }
+
+        /* Footer styling */
+        .footer-wrapper {
+            padding: 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .footer-wrapper a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .footer-wrapper a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="https://github.com/postmanlabs/httpbin" class="github-corner" aria-label="View source on Github">
+        <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#1f2937; color:#fff; position: absolute; top: 0; border: 0; right: 0; z-index: 9999;"
+            aria-hidden="true">
+            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+            <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+            <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                fill="currentColor" class="octo-body"></path>
+        </svg>
+    </a>
+
+    <div id="swagger-ui"></div>
+
+    <div class="footer-wrapper">
+        <span>
+            Powered by <a href="https://github.com/rochacbruno/flasgger" target="_blank">Flasgger</a>
+            &nbsp;|&nbsp;
+            <a href="https://github.com/postmanlabs/httpbin" target="_blank">httpbin</a> - HTTP Request & Response Service
+        </span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.29.1/swagger-ui-bundle.min.js" charset="UTF-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.29.1/swagger-ui-standalone-preset.min.js" charset="UTF-8"></script>
+    <script>
+        window.onload = function () {
+            // Determine the spec URL, accounting for any prefix
+            var specUrl = "{{ specs[0]['url'] }}";
+            {% if httpbin_prefix %}
+            // Ensure the spec URL includes the prefix if not already present
+            if (!specUrl.startsWith("{{ httpbin_prefix }}")) {
+                specUrl = "{{ httpbin_prefix }}" + specUrl;
+            }
+            {% endif %}
+
+            fetch(specUrl)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (spec) {
+                    // Update scheme to match current protocol
+                    var currentProtocol = window.location.protocol.slice(0, -1);
+                    if (spec.schemes && spec.schemes[0] !== currentProtocol) {
+                        spec.schemes = [currentProtocol].concat(
+                            spec.schemes.filter(function(s) { return s !== currentProtocol; })
+                        );
+                    }
+
+                    // Set host to current host
+                    spec.host = window.location.host;
+
+                    // Update basePath if prefix is set
+                    {% if httpbin_prefix %}
+                    spec.basePath = "{{ httpbin_prefix }}/";
+                    {% endif %}
+
+                    const ui = SwaggerUIBundle({
+                        spec: spec,
+                        dom_id: '#swagger-ui',
+                        deepLinking: true,
+                        presets: [
+                            SwaggerUIBundle.presets.apis,
+                            SwaggerUIStandalonePreset
+                        ],
+                        plugins: [
+                            SwaggerUIBundle.plugins.DownloadUrl
+                        ],
+                        layout: "StandaloneLayout",
+                        validatorUrl: null,
+                        docExpansion: "list",
+                        filter: true,
+                        showExtensions: true,
+                        showCommonExtensions: true,
+                        defaultModelsExpandDepth: -1,
+                        displayRequestDuration: true,
+                        tryItOutEnabled: true
+                    });
+
+                    window.ui = ui;
+                })
+                .catch(function (error) {
+                    console.error('Error loading OpenAPI spec:', error);
+                    document.getElementById('swagger-ui').innerHTML =
+                        '<div style="padding: 20px; color: #ef4444;">Error loading API specification. Please refresh the page.</div>';
+                });
+        };
+    </script>
+    {% if tracking_enabled %}
+    {% include 'trackingscripts.html' %}
+    {% endif %}
+    {% include 'footer.html' %}
+</body>
+
+</html>

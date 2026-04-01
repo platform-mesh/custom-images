@@ -1,10 +1,9 @@
-FROM kong/httpbin:latest
-USER root
+FROM kong/httpbin:0.2.3
 
-# Modified from upstream
-COPY third_party/ /httpbin/httpbin
+USER root
 
 # Add /files endpoints
 ADD store.py /httpbin/httpbin
 RUN echo 'from .store import *' >> /httpbin/httpbin/__init__.py
-USER 1001
+
+USER httpbin

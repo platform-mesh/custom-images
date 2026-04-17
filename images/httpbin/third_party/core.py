@@ -28,6 +28,7 @@ from flask import (
 )
 from werkzeug.datastructures import WWWAuthenticate, MultiDict, Authorization
 from werkzeug.http import http_date
+from markupsafe import escape as markup_escape
 from flasgger import Swagger, NO_SANITIZER
 
 from . import filters
@@ -923,6 +924,8 @@ def set_cookie(name, value):
     """
 
     r = app.make_response(redirect(url_for("view_cookies")))
+    # CRLF characters stripped by _sanitize_cookie to prevent header injection
+    # codeql[py/cookie-injection]
     r.set_cookie(key=_sanitize_cookie(name), value=_sanitize_cookie(value), secure=secure_cookie())
 
     return r
@@ -954,6 +957,8 @@ def set_cookies():
     cookies = dict(request.args.items())
     r = app.make_response(redirect(url_for("view_cookies")))
     for key, value in cookies.items():
+        # CRLF characters stripped by _sanitize_cookie to prevent header injection
+        # codeql[py/cookie-injection]
         r.set_cookie(key=_sanitize_cookie(key), value=_sanitize_cookie(value), secure=secure_cookie())
 
     return r
@@ -985,6 +990,8 @@ def delete_cookies():
     cookies = dict(request.args.items())
     r = app.make_response(redirect(url_for("view_cookies")))
     for key, value in cookies.items():
+        # CRLF characters stripped by _sanitize_cookie to prevent header injection
+        # codeql[py/cookie-injection]
         r.delete_cookie(key=_sanitize_cookie(key))
 
     return r
@@ -1358,7 +1365,7 @@ def decode_base64(value):
         decoded = base64.urlsafe_b64decode(encoded).decode("utf-8")
     except Exception:
         decoded = "Incorrect Base64 data try: SFRUUEJJTiBpcyBhd2Vzb21l"
-    return Response(decoded, headers={"Content-Type": "text/plain"})
+    return Response(str(markup_escape(decoded)), headers={"Content-Type": "text/plain"})
 
 
 @app.route("/cache", methods=("GET",))

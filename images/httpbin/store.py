@@ -2,6 +2,15 @@ import os
 import io
 from .core import app, request, make_response
 
+def _safe_path(data_dir, filename):
+    """Resolve the file path and ensure it stays within data_dir."""
+    base = os.path.realpath(data_dir)
+    target = os.path.realpath(os.path.join(base, filename))
+    if not target.startswith(base + os.sep) and target != base:
+        from flask import abort
+        abort(400, "Invalid filename")
+    return target
+
 @app.route('/files/<string:filename>', methods=[ 'POST', 'PUT' ])
 def store(filename):
     """ Store a file.
@@ -14,7 +23,7 @@ def store(filename):
       200:
         description: File has been stored.
     """
-    outpath = os.path.join(os.environ.get('DATA_DIR', '/tmp'), filename)
+    outpath = _safe_path(os.environ.get('DATA_DIR', '/tmp'), filename)
     with io.open(outpath, 'wb') as f:
         f.write(request.data)
     response = make_response()
@@ -36,7 +45,7 @@ def retrieve(filename):
     import json
     import base64
     response = make_response()
-    readpath = os.path.join(os.environ.get('DATA_DIR', '/tmp'), filename)
+    readpath = _safe_path(os.environ.get('DATA_DIR', '/tmp'), filename)
     if not os.path.exists(readpath):
         response.status_code = 404
         response.data = 'File does not exist'

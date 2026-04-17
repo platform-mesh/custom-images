@@ -1,10 +1,7 @@
 FROM kong/httpbin:latest
-USER root
 
-# Modified from upstream
-COPY third_party/ /httpbin/httpbin
+# Add prefix middleware for subpath deployments (HTTPBIN_PREFIX env var)
+# and custom /files endpoints
+COPY prefix.py /httpbin/
 
-# Add /files endpoints
-ADD store.py /httpbin/httpbin
-RUN echo 'from .store import *' >> /httpbin/httpbin/__init__.py
-USER 1001
+CMD ["pipenv", "run", "gunicorn", "-b", "0.0.0.0:80", "prefix:app", "-k", "gevent"]

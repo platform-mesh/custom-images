@@ -36,6 +36,12 @@ You are welcome to contribute with your pull requests. These steps explain the c
 1. Make sure the tests pass. Our github actions pipeline is running the unit and e2e tests for your PR and will indicate any issues.
 1. Sign the Developer Certificate of Origin (DCO).
 
+## Generative AI
+
+If you use generative AI tools while preparing a contribution, you remain responsible for the correctness, safety, licensing, and maintainability of the submitted change.
+
+If you use Claude while contributing, do not assume it will automatically pick up this repository's `AGENTS.md`. Explicitly provide or reference `AGENTS.md` at the start of the session so Claude has the repository-specific instructions before it suggests or applies changes.
+
 ## Issues
 We use GitHub issues to track bugs. Please ensure your description is
 clear and includes sufficient instructions to reproduce the issue.

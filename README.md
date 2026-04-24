@@ -3,6 +3,8 @@
 
 # platform-mesh - custom-images
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/platform-mesh/custom-images/badge)](https://scorecard.dev/viewer/?uri=github.com/platform-mesh/custom-images)
+
 ## Description
 
 This repository contains a set of custom utility images used as part of the platform-mesh project.

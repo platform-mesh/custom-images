@@ -111,5 +111,5 @@ jobs:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}
       appVersion: ${{ needs.build.outputs.version }}
       repoName: custom-images
-      componentName: github.com/platform-mesh/custom-images/keycloak
+      componentName: "github.com/platform-mesh/custom-images/keycloak"
       commit: ${{ github.sha }}

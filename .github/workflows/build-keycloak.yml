@@ -2,7 +2,6 @@ name: Build Keycloak Custom Image
 
 permissions:
   contents: read
-  packages: write
 
 on:
   push:
@@ -98,14 +97,14 @@ jobs:
   sbom:
     if: startsWith(github.ref, 'refs/tags/keycloak/')
     needs: [build]
-    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@main
+    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@a92948421e9344929f5b9edd6048aa688c1b8ace # main
     with:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}
 
   image-ocm:
     if: startsWith(github.ref, 'refs/tags/keycloak/')
     needs: [build, sbom]
-    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@main
+    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@a92948421e9344929f5b9edd6048aa688c1b8ace # main
     secrets: inherit
     with:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}

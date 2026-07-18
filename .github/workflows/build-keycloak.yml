@@ -107,14 +107,14 @@ jobs:
   sbom:
     if: startsWith(github.ref, 'refs/tags/keycloak/')
     needs: [build]
-    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@03e076ff9aebe43ead6b9d77f3bb764a9d411347 # main
+    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@cd5bbb070e082d6b02743b21350ec5d859be0a02 # main
     with:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}
 
   image-ocm:
     if: startsWith(github.ref, 'refs/tags/keycloak/')
     needs: [build, sbom]
-    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@03e076ff9aebe43ead6b9d77f3bb764a9d411347 # main
+    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@cd5bbb070e082d6b02743b21350ec5d859be0a02 # main
     secrets: inherit # zizmor: ignore[secrets-inherit]
     with:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}

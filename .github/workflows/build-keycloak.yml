@@ -107,6 +107,9 @@ jobs:
   sbom:
     if: startsWith(github.ref, 'refs/tags/keycloak/')
     needs: [build]
+    permissions:
+      contents: read # Needed to read repository contents
+      packages: read # Needed to pull the image from GHCR to generate the SBOM
     uses: platform-mesh/.github/.github/workflows/job-sbom.yml@03e076ff9aebe43ead6b9d77f3bb764a9d411347 # main
     with:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}
@@ -114,6 +117,9 @@ jobs:
   image-ocm:
     if: startsWith(github.ref, 'refs/tags/keycloak/')
     needs: [build, sbom]
+    permissions:
+      contents: read # Needed to read repository contents
+      packages: write # Needed to push the signed OCM component to GHCR
     uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@03e076ff9aebe43ead6b9d77f3bb764a9d411347 # main
     secrets: inherit # zizmor: ignore[secrets-inherit]
     with:

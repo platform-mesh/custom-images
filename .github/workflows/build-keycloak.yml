@@ -110,7 +110,7 @@ jobs:
     permissions:
       contents: read # Needed to read repository contents
       packages: read # Needed to pull the image from GHCR to generate the SBOM
-    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@ed8f9da56e7a995c3572ab0a87f143fa675208ef # main
+    uses: platform-mesh/.github/.github/workflows/job-sbom.yml@75f04cd6d0bd1cc9fc5b7917e6a4a0829d66b93b # main
     with:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}
 
@@ -120,7 +120,7 @@ jobs:
     permissions:
       contents: read # Needed to read repository contents
       packages: write # Needed to push the signed OCM component to GHCR
-    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@ed8f9da56e7a995c3572ab0a87f143fa675208ef # main
+    uses: platform-mesh/.github/.github/workflows/job-image-ocm.yml@75f04cd6d0bd1cc9fc5b7917e6a4a0829d66b93b # main
     secrets: inherit # zizmor: ignore[secrets-inherit]
     with:
       imageReference: ghcr.io/${{ github.repository }}/keycloak:${{ needs.build.outputs.version }}

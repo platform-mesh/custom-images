@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   scorecard:
-    uses: platform-mesh/.github/.github/workflows/job-ossf-scorecard.yml@ed8f9da56e7a995c3572ab0a87f143fa675208ef # main
+    uses: platform-mesh/.github/.github/workflows/job-ossf-scorecard.yml@75f04cd6d0bd1cc9fc5b7917e6a4a0829d66b93b # main
     permissions:
       security-events: write # Needed to write to the GitHub Security tab
       id-token: write # Needed for OIDC authentication
